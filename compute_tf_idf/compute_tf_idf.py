@@ -1,7 +1,5 @@
 import math, heapq
 import os, argparse, logging, time
-from daemon import runner
-import logging
 import sys
 import multiprocessing
 
@@ -12,7 +10,7 @@ class Tfidf:
         with open(document) as f:
             for line in f:
                 for word in line.split():
-                    if t==word:
+                    if word in t:
                         return True
         return False 
 
@@ -21,7 +19,7 @@ class Tfidf:
         with open(document) as f:
             for line in f:
                 for word in line.split():
-                    if t==word:
+                    if word in t: 
                         matches+=1
         return matches
 
@@ -30,7 +28,7 @@ class Tfidf:
         for d in documents:
             if self.is_term(t, d):
                 i+=1
-        return math.log(len(documents)/(i+1))
+        return math.log((len(documents)+1)/(i+1))
 
     def tfidf(self, t, d, documents):
         return self.tf(t, d)*self.idf(t,documents)
@@ -79,12 +77,16 @@ if __name__ == "__main__":
     parser.add_argument('-n', metavar='N', type=int, help='The count N of top results to show', required=True)
     parser.add_argument('-p', metavar='N', type=int, help='The period P to report the top N in segs', required=True)
 
-    args = parser.parse_args()
 
-    newpid = os.fork()
-    if newpid == 0:
-        app=App(args.d, args.p, args.t, args.n)
-        app.run()
+    args = parser.parse_args()
+    terms = args.t[0].split()
+    app=App(args.d, args.p, terms, args.n)
+    app.run()
+
+    #newpid = os.fork()
+    #if newpid == 0:
+    #    app=App(args.d, args.p, terms, args.n)
+    #    app.run()
 
 
 
