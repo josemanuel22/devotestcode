@@ -1,8 +1,9 @@
 import math, heapq
 import os, argparse, logging, time
-import daemon
+from daemon import runner
 import logging
 import sys
+import multiprocessing
 
 class Tfidf:
 
@@ -69,8 +70,7 @@ class App:
             top = self.documents.top(self.t, self.n)
             for tfidf, doc in top:
                 print(str(tfidf)+" "+doc.split("/")[-1])
-            time.sleep(self.period)
-
+            time.sleep(self.period)    
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='computed tf/idf for each document and the inferred ranking')
@@ -80,10 +80,13 @@ if __name__ == "__main__":
     parser.add_argument('-p', metavar='N', type=int, help='The period P to report the top N in segs', required=True)
 
     args = parser.parse_args()
-    app=App(args.d, args.p, args.t, args.n)
-    app.run()
-    #with daemon.DaemonContext():
-    #    app.run()
+
+    newpid = os.fork()
+    if newpid == 0:
+        app=App(args.d, args.p, args.t, args.n)
+        app.run()
+
+
 
     
 
