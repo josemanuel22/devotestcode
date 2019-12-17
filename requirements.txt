@@ -48,7 +48,7 @@ python-daemon==2.2.4
 python-dateutil==2.6.1
 pytools==2018.4
 pytz==2018.3
-requests==2.18.4
+requests==2.20.0
 scipy==1.0.0
 scrypt==0.8.6
 simplegeneric==0.8.1
