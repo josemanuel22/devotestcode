@@ -104,16 +104,19 @@ class App:
         self.period=period
         self.t=term
         self.n=n
-        logging.basicConfig(level=logging.INFO, format="%(message)s")
-        if logfile==sys.stdout:
-            f_handler = logging.FileHandler(logging.StreamHandler(sys.stdout))
-        else:
+        if logfile is not sys.stdout:
+            logging.basicConfig(level=logging.INFO, format="%(message)s")
             f_handler = logging.FileHandler(logfile)
-        self.logger=logging.getLogger()
-        self.logger.addHandler(f_handler)
+            self.logger=logging.getLogger()
+            self.logger.addHandler(f_handler)
+        else:
+            logging.basicConfig(level=logging.INFO, format="%(message)s")
+            self.logger=logging.getLogger()
+        
+
 
     def run(self):
-         """
+        """
         Run a continous top n (specified in the constructor) search of the terms t in the documents specified in the constructor with period specified also in the constructor. 
         Print the result in sdout (can be modified).
         """
@@ -138,8 +141,6 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
     terms = args.t[0].split()
-    app=App(args.d, args.p, terms, args.n)
-    app.run()
 
     newpid = os.fork()
     if newpid == 0:
