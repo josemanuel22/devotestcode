@@ -4,6 +4,17 @@
 
 In module palindrome we write an efficient algorithm to check if a string is a palindrome. The function that checks if a number is palindrome is in the src folder. In this function we simply verify that the initial half of the character string matches the final half read backwards. If a string of characters is palindrome then n / 2 comparisons will have to be made. Therefore the complexity is O(n), where n is the number of characters in the string.
 
+```
+def is_palindrome(string):
+    i=0
+    n=int(len(string)/2)
+    for letter in string[0:n-1]:
+        i+=1
+        if letter != string[-i]:
+            return False
+    return True
+```
+
 ## kcomplementary
 
 In the module kcomplementay we write an efficient algorithm to find K-complementary pairs in a given array of integers.  Given Array A, pair (i, j) is K- complementary if K = A[i] + A[j]; 
