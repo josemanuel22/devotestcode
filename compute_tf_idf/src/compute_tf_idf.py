@@ -4,8 +4,19 @@ import sys, multiprocessing
 import logging
 
 class Tfidf:
+    """
+    Calculate Tfidf of a document
+    """
 
     def is_term(self, t, document):
+        """
+        Check if a term t appears in a document
+        :param t: term to search
+        :param document: documento where to search the term
+        :type t: String
+        :type document: String
+        :return: True if the term is in the document, if not False
+        """
         matches=0
         with open(document) as f:
             for line in f:
@@ -15,6 +26,14 @@ class Tfidf:
         return False 
 
     def tf(self, t, document):
+        """
+        Calculate the tf of a term in a document
+        :param t: term to search
+        :param document: documento where to search the term
+        :type t: String
+        :type document: String
+        :return: The tf of the term
+        """
         matches=0
         with open(document) as f:
             for line in f:
@@ -24,6 +43,14 @@ class Tfidf:
         return matches
 
     def idf(self, t, documents):
+        """
+        Calculate the itf of a term of a list of documents
+        :param t: term to search
+        :param documents: list of documents where to search the term
+        :type t: String
+        :type documents: list of Strings
+        :return: The tf of the term
+        """
         i=0
         for d in documents:
             if self.is_term(t, d):
@@ -35,7 +62,9 @@ class Tfidf:
 
 
 class Documents:
-
+    """
+    Class that stores documents and calculates the top.
+    """
     def __init__(self, dirpath):
         self.dirpath=dirpath
         self.documents=list()
@@ -43,6 +72,11 @@ class Documents:
         self.h=[]
 
     def refresh(self, t):
+        """
+        Refresh to check if there is a new document and calculates his tfidf.
+        :param t: term to search
+        :type t: String
+        """
         temp=[]
         for r, d, f in os.walk(self.dirpath):
             for file in f:
@@ -53,6 +87,14 @@ class Documents:
             heapq.heappush(self.h,(self.tfidf.tfidf(t,self.dirpath+"/"+file,self.documents),self.dirpath+"/"+file))
 
     def top(self, t, n):
+        """
+        Calculates the top n documents that matches the search t
+        :param t: term to search
+        :param n: top n
+        :type t: String
+        :type n: int
+        :return: Top n documents tha matches the search t
+        """
         self.refresh(t)
         return heapq.nlargest(n,self.h)
 
@@ -71,6 +113,10 @@ class App:
         self.logger.addHandler(f_handler)
 
     def run(self):
+         """
+        Run a continous top n (specified in the constructor) search of the terms t in the documents specified in the constructor with period specified also in the constructor. 
+        Print the result in sdout (can be modified).
+        """
         while True:
             top = self.documents.top(self.t, self.n)
             for tfidf, doc in top:
