@@ -1,5 +1,13 @@
 # Devotestcode
 
+##Setups
+
+I have tested the code both on my personal computer and on a ubuntu 18.04.3 VM. The code provided only uses packages from the standard python3 library. However, we include a requirements.txt if necessary. If a ModuleNotFoundError error appears, remember to add the path to the PYTHONPATH variable so that the compiler can find the modules. That is, add the devotestcode folder to the path.
+
+```
+export PYTHONPATH=route_to_devotestcode/devotestcode
+```
+
 ## Palindromes
 
 In module palindrome we write an efficient algorithm to check if a string is a palindrome. The function that checks if a number is palindrome is in the src folder. In this function we simply verify that the initial half of the character string matches the final half read backwards. If a string of characters is palindrome then n / 2 comparisons will have to be made. Therefore the complexity is O(n), where n is the number of characters in the string.
