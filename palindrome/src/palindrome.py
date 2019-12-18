@@ -1,6 +1,6 @@
 
 def is_palindrome(string):
-     """
+    """
     Check if a sring is palindrome
     :param string: string to check if is palindrome
     :type string: string
