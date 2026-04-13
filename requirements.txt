@@ -7,4 +7,4 @@ daemonize==2.5.0
 devotestcode==0.1
 docutils==0.15.2
 pathlib==1.0.1
-pytest==3.5.0
+pytest==9.0.3
